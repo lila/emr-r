@@ -1,0 +1,27 @@
+Sample EMR project for using EMR with R
+
+This is pretty simple, it uses hadoop streaming to launch R scripts 
+for both the mapper and the reducer.  This sample uses a public dataset
+and uses the r scripts provided at:
+
+http://architects.dzone.com/articles/hadoopr-integration-i
+
+One perhaps useful thing that this project does is include a 
+bootstrap script to update the version of R on the EMR nodes.  The 
+script installs version 3.0 whereas the default version is 2.11.
+
+Check the Makefile for the details, you will need to configure
+s3cmd and the elastic-mapreduce commandline tools, then make sure
+they are in the path, or set the path in the Makefile.
+
+Then:
+
+1.  make bootstrap - to create an s3 bucket and push the scripts and
+	data to s3
+2.  make create - to create a new emr cluster
+3.  make submitjob - to submit a new hadoop streaming job to the cluster
+
+the output will be in s3://<yourname>.r.emr/output/
+
+4.  make destroy - to delete the s3 bucket and terminate the cluster
+
